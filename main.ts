@@ -21,6 +21,9 @@ function Level8 () {
     Make_Invisible(Car_2V2)
     Make_Invisible(Car_3V2)
 }
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+    MoveY(-16)
+})
 function Create_Charecters () {
     Driver = sprites.create(img`
         ........b.......
@@ -498,6 +501,9 @@ function Colors2 () {
     color.setColor(5, color.rgb(220, 220, 7))
     color.setColor(4, color.rgb(79, 70, 37))
 }
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    MoveY(16)
+})
 function Level2 () {
     Put_in_level(Driver, 72, 98)
     Put_in_level(LimoV3, 40, 40)
@@ -589,6 +595,9 @@ function Go_to_level (extra: boolean) {
         game.splash("Level " + convertToText(Level))
     }
 }
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    MoveX(16)
+})
 function Level1 () {
     Put_in_level(Driver, 72, 64)
     Put_in_level(SchoolBusH3, 56, 40)
@@ -646,6 +655,50 @@ function Level7 () {
     Make_Invisible(Car_2V2)
     Make_Invisible(Car_3V2)
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    game.splash("Choose Level", "1-9")
+    Level = game.askForNumber("", 1)
+    Go_to_level(true)
+})
+function MoveY (dir: number) {
+    for (let y_sprite of V_list) {
+        overlap = false
+        for (let 值 of V_list) {
+            if (y_sprite.overlapsWith(值)) {
+                overlap = true
+            }
+        }
+        for (let x_sprite of H_list) {
+            if (x_sprite.overlapsWith(y_sprite)) {
+                overlap = true
+            }
+        }
+        if (!(overlap)) {
+            y_sprite.y += dir
+            if (y_sprite.top == 0) {
+                if (y_sprite.x != 72) {
+                    y_sprite.y += 0 - dir
+                }
+            }
+            if (y_sprite.bottom == 128) {
+                y_sprite.y += 0 - dir
+            }
+        }
+        for (let 值 of V_list) {
+            if (y_sprite.overlapsWith(值)) {
+                overlap = true
+            }
+        }
+        for (let x_sprite of H_list) {
+            if (y_sprite.overlapsWith(x_sprite)) {
+                overlap = true
+            }
+        }
+        if (overlap) {
+            y_sprite.y += 0 - dir
+        }
+    }
+}
 function Level9 () {
     Put_in_level(Driver, 72, 48)
     Put_in_level(SchoolBusH3, 56, 104)
@@ -690,6 +743,9 @@ function Put_in_level (Vehicle: Sprite, x: number, y: number) {
     Vehicle.setFlag(SpriteFlag.Invisible, false)
     Vehicle.setPosition(x, y)
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    MoveX(-16)
+})
 function Make_Invisible (Vehicle: Sprite) {
     Vehicle.setFlag(SpriteFlag.Ghost, true)
     Vehicle.setFlag(SpriteFlag.Invisible, true)
@@ -713,6 +769,44 @@ function Level6 () {
     Make_Invisible(Car_2V2)
     Make_Invisible(Car_3V2)
 }
+function MoveX (dir: number) {
+    for (let x_sprite of H_list) {
+        overlap = false
+        for (let y_sprite of V_list) {
+            if (x_sprite.overlapsWith(y_sprite)) {
+                overlap = true
+            }
+        }
+        for (let 值 of H_list) {
+            if (x_sprite.overlapsWith(值)) {
+                overlap = true
+            }
+        }
+        if (!(overlap)) {
+            x_sprite.x += dir
+            if (x_sprite.left == 16) {
+                x_sprite.x += 0 - dir
+            }
+            if (x_sprite.right == 144) {
+                x_sprite.x += 0 - dir
+            }
+        }
+        for (let y_sprite of V_list) {
+            if (x_sprite.overlapsWith(y_sprite)) {
+                overlap = true
+            }
+        }
+        for (let 值 of H_list) {
+            if (x_sprite.overlapsWith(值)) {
+                overlap = true
+            }
+        }
+        if (overlap) {
+            x_sprite.x += 0 - dir
+        }
+    }
+}
+let overlap = false
 let Car_3V2: Sprite = null
 let Car_2V2: Sprite = null
 let TrailerCarH3: Sprite = null
@@ -747,6 +841,15 @@ for (let 值4 of H_list) {
     值4.setFlag(SpriteFlag.StayInScreen, true)
     值4.setFlag(SpriteFlag.Invisible, true)
 }
-game.splash("Choose Level", "1-9")
-Level = game.askForNumber("", 1)
-Go_to_level(true)
+Level = 1
+Go_to_level(false)
+game.onUpdate(function () {
+    if (Driver.y == 16) {
+        if (Level < 9) {
+            Level += 1
+        } else {
+            game.over(true)
+        }
+        Go_to_level(false)
+    }
+})

@@ -4,7 +4,8 @@
     "dependencies": {
         "device": "*",
         "palette": "*",
-        "Color Fading": "github:jwunderl/pxt-color#v0.2.1"
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.1",
+        "storyboard": "*"
     },
     "files": [
         "main.blocks",
@@ -20,7 +21,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "1.4.30",
+        "target": "1.4.35",
         "targetId": "arcade"
     },
     "supportedTargets": [

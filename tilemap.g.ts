@@ -16,14 +16,14 @@ namespace myTiles {
     helpers._registerFactory("tilemap", function(name: string) {
         switch(helpers.stringTrim(name)) {
             case "级别1":
-            case "级别1":return tiles.createTilemap(hex`0a0008000101010100010101010101010200000000000301010100000000000000010101000000000000000101010000000000000001010100000000000000010101040000000000050101010101010101010101`, img`
+            case "级别1":return tiles.createTilemap(hex`0a0008000101010100010101010101010200000000030101010100000000000001010101000000000000010101010000000000000101010100000000000001010101040000000005010101010101010101010101`, img`
 2 2 2 2 . 2 2 2 2 2 
-2 2 . . . . . . . 2 
-2 2 . . . . . . . 2 
-2 2 . . . . . . . 2 
-2 2 . . . . . . . 2 
-2 2 . . . . . . . 2 
-2 2 . . . . . . . 2 
+2 2 . . . . . . 2 2 
+2 2 . . . . . . 2 2 
+2 2 . . . . . . 2 2 
+2 2 . . . . . . 2 2 
+2 2 . . . . . . 2 2 
+2 2 . . . . . . 2 2 
 2 2 2 2 2 2 2 2 2 2 
 `, [myTiles.transparency16,myTiles.tile1,myTiles.tile2,myTiles.tile3,myTiles.tile4,myTiles.tile5], TileScale.Sixteen);
         }
